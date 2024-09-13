@@ -24,6 +24,12 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Debug.Log("Get Hint");
+            MasterManager.Instance.modelController.GetHint();
+        }
+
         currentPos = inputs.ModelView.PrimaryTouchPosition.ReadValue<Vector2>();
         currentDelta = inputs.ModelView.SwipeAxis.ReadValue<Vector2>();
 
@@ -51,5 +57,6 @@ public class InputManager : MonoBehaviour
 
             MasterManager.Instance.modelController.SetRotationVelocity(currentDelta);
         }
+
     }
 }

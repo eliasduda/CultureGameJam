@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: "L\xF6we"
-  m_Shader: {fileID: -6465566751694194690, guid: b7a34e3467fb15249945bd443d10f642, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: f685ef4d27133a0418202bf1bc030bbe, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -72,12 +72,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _BumpScale: 1
-    - _CurrentHint: 0
+    - _CurrentHint: 6
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -86,10 +98,12 @@ Material:
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NoisePercentage: 0.2
-    - _NoiseScale: 69.12
+    - _NoisePercentage: 0.03
+    - _NoiseScale: 80.36
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -99,9 +113,22 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Hint1: {r: -21.792738, g: 12.418882, b: -9.647311, a: 0}
-    - _Hint2: {r: -1.4428463, g: 24.045792, b: -6.207712, a: 0}
-    - _Hint3: {r: -14.933453, g: -1.1165199, b: -7.360383, a: 0}
-    - _Hint4: {r: -14.291525, g: -2.1138573, b: -8.245145, a: 0}
-    - _Hint5: {r: -2.7820482, g: -3.8310251, b: -8.783902, a: 0}
+    - _Hint1: {r: 2.3055573, g: 23.37237, b: 10.017501, a: 0}
+    - _Hint2: {r: 3.5443287, g: 4.499196, b: 0.05066967, a: 0}
+    - _Hint3: {r: -18.017363, g: 7.8276477, b: 4.825718, a: 0}
+    - _Hint4: {r: -25.528667, g: 6.4355235, b: -6.9704723, a: 0}
+    - _Hint5: {r: -0.53862476, g: 27.480434, b: -3.7399745, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &7193312700764809535
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
