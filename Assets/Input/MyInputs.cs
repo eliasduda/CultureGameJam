@@ -165,7 +165,7 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5fb0716d-f391-4390-bd15-b65b750bf9b9"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

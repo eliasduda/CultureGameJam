@@ -27,7 +27,8 @@ public class InputManager : MonoBehaviour
         currentPos = inputs.ModelView.PrimaryTouchPosition.ReadValue<Vector2>();
         currentDelta = inputs.ModelView.SwipeAxis.ReadValue<Vector2>();
 
-        Debug.Log("CurrentPos = " + currentPos + " currentDelta = " + currentDelta);
+        if (inputs.ModelView.PrimaryTouchButton.WasReleasedThisFrame()) Debug.Log("Touch Up");
+        if (inputs.ModelView.PrimaryTouchButton.WasPressedThisFrame()) Debug.Log("Touch Down");
 
         if (inputs.ModelView.PrimaryTouchButton.WasReleasedThisFrame()) clickedOnModel = false;
         else if (currentPos != Vector2.zero && inputs.ModelView.PrimaryTouchButton.WasPressedThisFrame())
