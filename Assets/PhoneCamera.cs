@@ -98,6 +98,7 @@ public class PhoneCamera : MonoBehaviour
 #if UNITY_ANDROID
         return Permission.HasUserAuthorizedPermission(permission);
 #endif
+	else return false;
     }
 
     void AskPermissionToCamera()

@@ -17,3 +17,73 @@
     left: 629px;
     position: absolute;
 }
+
+.overlayContainer {
+    position: absolute;
+    bottom: 0;
+}
+
+#unity-tracker {
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    background-color: rgb(0, 121, 140);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    width: 12px;
+    height: 156px;
+    left: auto;
+    align-items: flex-end;
+    justify-content: center;
+    align-self: center;
+}
+
+#unity-dragger-border {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-left-color: rgba(43, 41, 41, 0);
+    border-right-color: rgba(43, 41, 41, 0);
+    border-top-color: rgba(43, 41, 41, 0);
+    border-bottom-color: rgba(43, 41, 41, 0);
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#unity-dragger {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    background-color: rgb(209, 73, 91);
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    width: 37px;
+    height: 14px;
+    bottom: auto;
+    top: auto;
+    right: auto;
+    flex-direction: column;
+    flex-basis: auto;
+    margin-left: -18px;
+}
+
+.text_hint {
+    padding-bottom: 15px;
+    padding-top: 15px;
+    background-color: rgba(209, 73, 91, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
