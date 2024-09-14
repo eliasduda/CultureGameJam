@@ -1,0 +1,19 @@
+.options_Button {
+    position: absolute;
+    top: -1781px;
+    left: 852px;
+    background-image: url("project://database/Assets/UI/burgerMenu-icon.png?fileID=2800000&guid=6aba913b70f4ea44995052d7f79049de&type=3#burgerMenu-icon");
+    background-color: rgba(188, 188, 188, 0);
+    width: 98px;
+    height: 76px;
+}
+
+.camera_Button {
+    background-image: url("project://database/Assets/UI/Camera-icon.png?fileID=2800000&guid=6380d1d47b3f3d244a2c2ea8b3eb0cdb&type=3#Camera-icon");
+    background-color: rgba(255, 255, 255, 0);
+    top: 58px;
+    width: 120px;
+    height: 86px;
+    left: 629px;
+    position: absolute;
+}
