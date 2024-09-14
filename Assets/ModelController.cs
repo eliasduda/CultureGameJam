@@ -90,7 +90,7 @@ public class ModelController : MonoBehaviour
         mesh.sharedMaterial.SetVector("_Hint"+hint, mesh.transform.InverseTransformPoint(pos));
     }
 
-    public void SetHintLevel(float value)
+    public void SetHintLevel(Single value)
     {
         if (!modelIsLoaded) return;
         currentHint = Mathf.FloorToInt(value);

@@ -29,10 +29,6 @@ public class MainMenu : MonoBehaviour
         cameraButton = root.Q<Button>("Button_OpenCamera");
         cameraButton.clickable.clicked += OpenCameraView;
 
-
-
-        eyeSlider = root.Q<Slider>("Slider_Eye");
-        mapSlider = hintMenu.Q<Slider>("Slider_Map");
     }
     // Start is called before the first frame update
     void Start()

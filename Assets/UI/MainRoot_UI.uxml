@@ -49,7 +49,7 @@
             <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button_Options" class="options_Button" />
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="Menu_Camera" style="flex-grow: 1; position: absolute; top: 0; right: 0; bottom: 0; display: flex; width: auto; left: 0;">
+    <ui:VisualElement name="Menu_Camera" style="flex-grow: 1; position: absolute; top: 0; right: 0; bottom: 0; display: none; width: auto; left: 0; visibility: visible;">
         <ui:VisualElement style="flex-grow: 1; background-color: rgb(237, 174, 73); position: absolute; width: 100%; height: 281px;" />
         <ui:VisualElement style="flex-grow: 1; background-color: rgb(237, 174, 73); position: absolute; width: 100%; height: 752px; top: 1127px; left: 0;" />
         <ui:VisualElement name="OverlayContainer" class="overlayContainer">
