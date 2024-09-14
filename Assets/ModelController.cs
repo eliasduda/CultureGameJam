@@ -10,7 +10,7 @@ public class ModelController : MonoBehaviour
     public float rotationSpeed = 5f;
     public Vector2 tiltLimits = new Vector2(-20, 10);
     public float zoomSmooth, zoomSpeed;
-    private float minZoom = 36f, maxZoom = 80;
+    private float minZoom = 25f, maxZoom = 60;
     private float radius;
 
     private Camera modelCam;
