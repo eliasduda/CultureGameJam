@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class PhoneCamera : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class PhoneCamera : MonoBehaviour
             squareTexture.SetPixels(pixels);
             squareTexture.Apply();
             display.texture = squareTexture;
+            MasterManager.Instance.menu.RenderInCameraFrame(squareTexture);
 
             int scaleY = tex.videoVerticallyMirrored ? -1 :  1;
             display.rectTransform.localScale = new Vector3(isFrontCam? 1 : 1, scaleY, 1);
@@ -51,6 +53,7 @@ public class PhoneCamera : MonoBehaviour
 
     public void SwitchWebCam()
     {
+        if (!camAvailiable) return;
         if (WebCamTexture.devices.Length > 0)
         {
             currentCam++;
@@ -59,19 +62,18 @@ public class PhoneCamera : MonoBehaviour
         }
     }
 
-    public void StartCameraCallback(string callbackText)
-    {
-        StartCamera();
-    }
-
     public void StartCamera()
     {
+        if (camAvailiable)
+        {
+            StopCamera();
+            return;
+        }
         if (HasPermission(Permission.Camera))
         {
             Debug.Log("Start cam");
             WebCamDevice device = WebCamTexture.devices[currentCam];
             tex = new WebCamTexture(device.name);
-            display.texture = squareTexture;
             tex.Play();
             camAvailiable = true;
             isFrontCam = device.isFrontFacing;
@@ -108,9 +110,7 @@ public class PhoneCamera : MonoBehaviour
         
 #endif
 #if UNITY_ANDROID
-        var callbacks = new PermissionCallbacks();
-        callbacks.PermissionGranted += StartCameraCallback;
-        Permission.RequestUserPermission(Permission.Camera, callbacks);
+        Permission.RequestUserPermission(Permission.Camera);
 #endif
     }
 
@@ -141,13 +141,13 @@ public class PhoneCamera : MonoBehaviour
         }
         else 
         {
+            Debug.Log("Taking pic");
             Texture2D displayTexture = display.texture as Texture2D;
             Texture2D texture = new Texture2D(displayTexture.width, displayTexture.height);
             texture.SetPixels(displayTexture.GetPixels());
             texture.Apply();
             if (photos.ContainsKey(MasterManager.Instance.modelController.currentModel)) photos.Remove(MasterManager.Instance.modelController.currentModel);
             photos.Add(MasterManager.Instance.modelController.currentModel, texture);
-            DisplayPicture();
             MasterManager.Instance.modelController.modelIsFinished = true;
         }
     }

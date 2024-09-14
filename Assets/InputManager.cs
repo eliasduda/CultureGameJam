@@ -64,7 +64,7 @@ public class InputManager : MonoBehaviour
         if (inputs.ModelView.PrimaryTouchButton.WasReleasedThisFrame()) clickedOnModel = false;
         else if (currentPos != Vector2.zero && inputs.ModelView.PrimaryTouchButton.WasPressedThisFrame())
         {
-            if(MasterManager.Instance.menu.modelScreenBounds.Contains(currentPos)) 
+            //if(MasterManager.Instance.menu.IsScreenposInBounds(currentPos)) 
             { 
                 clickedOnModel = true;
                 Debug.Log("Clicked On Model");
@@ -73,7 +73,7 @@ public class InputManager : MonoBehaviour
                     if (setHintOnClick)
                     {
                         Debug.Log("Set Hint");
-                        MasterManager.Instance.modelController.SetHint(currentHintSetter, hit.point);
+                        MasterManager.Instance.modelController.SetHintInMaterial(currentHintSetter, hit.point);
                         currentHintSetter++;
                     }
                 }

@@ -10,7 +10,7 @@ public class ModelController : MonoBehaviour
     public float rotationSpeed = 5f;
     public Vector2 tiltLimits = new Vector2(-20, 10);
     public float zoomSmooth, zoomSpeed;
-    private float minZoom = 36f, maxZoom = 120;
+    private float minZoom = 36f, maxZoom = 80;
     private float radius;
 
     private Camera modelCam;
@@ -85,11 +85,17 @@ public class ModelController : MonoBehaviour
         targetZoom = Mathf.Clamp(targetZoom + delta * zoomSpeed, maxZoom, minZoom);
     }
 
-    internal void SetHint(int hint,Vector3 pos)
+    internal void SetHintInMaterial(int hint,Vector3 pos)
     {
         mesh.sharedMaterial.SetVector("_Hint"+hint, mesh.transform.InverseTransformPoint(pos));
     }
 
+    public void SetHintLevel(float value)
+    {
+        if (!modelIsLoaded) return;
+        currentHint = Mathf.FloorToInt(value);
+        mesh.sharedMaterial.SetFloat("_CurrentHint", currentHint);
+    }
     public void GetHint()
     {
         currentHint++;

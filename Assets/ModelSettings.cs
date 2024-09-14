@@ -7,4 +7,5 @@ public class ModelSettings : ScriptableObject
 {
     public GameObject model;
     public string modelName;
+    public bool wasFinished;
 }
