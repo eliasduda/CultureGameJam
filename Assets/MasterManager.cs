@@ -7,8 +7,9 @@ public class MasterManager : MonoBehaviour
 {
     public static MasterManager Instance;
 
-    public Camera mainCam;
+    public Camera modelCam, mainCam;
     public ModelController modelController;
+    public MainMenu menu;
 
     public ModelSettings startModel;
     // Start is called before the first frame update

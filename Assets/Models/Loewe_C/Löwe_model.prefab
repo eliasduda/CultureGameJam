@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1455853970301337718}
   - component: {fileID: 1090141784537103130}
   - component: {fileID: 7745879497896406452}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "L\xF6we_model"
   m_TagString: Untagged
   m_Icon: {fileID: 0}

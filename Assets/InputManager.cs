@@ -17,7 +17,7 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         inputs = new MyInputs();
-        cam = MasterManager.Instance.mainCam;
+        cam = MasterManager.Instance.modelCam;
         inputs.Enable();
         setHintOnClick = false;
     }
@@ -64,7 +64,7 @@ public class InputManager : MonoBehaviour
         if (inputs.ModelView.PrimaryTouchButton.WasReleasedThisFrame()) clickedOnModel = false;
         else if (currentPos != Vector2.zero && inputs.ModelView.PrimaryTouchButton.WasPressedThisFrame())
         {
-            if(Vector3.Distance(currentPos, cam.WorldToScreenPoint(MasterManager.Instance.modelController.transform.position)) < Screen.width) 
+            if(MasterManager.Instance.menu.modelScreenBounds.Contains(currentPos)) 
             { 
                 clickedOnModel = true;
                 Debug.Log("Clicked On Model");

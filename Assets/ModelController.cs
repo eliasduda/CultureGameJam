@@ -10,9 +10,10 @@ public class ModelController : MonoBehaviour
     public float rotationSpeed = 5f;
     public Vector2 tiltLimits = new Vector2(-20, 10);
     public float zoomSmooth, zoomSpeed;
-    private float minZoom = -30f, maxZoom = -100;
+    private float minZoom = 36f, maxZoom = 120;
+    private float radius;
 
-    private Camera cam;
+    private Camera modelCam;
     private float targetZoom;
 
     public Transform modelPivot;
@@ -25,17 +26,18 @@ public class ModelController : MonoBehaviour
     private Vector3[] HintPositions;
     [System.NonSerialized]
     public float lowestHeight, boundsRadius;
-    public bool modelIsLoaded = true;
+    public bool modelIsLoaded = true, modelIsFinished;
 
     public void LoadModel(ModelSettings model)
     {
         currentModel = model;
-        cam = MasterManager.Instance.mainCam;
+        modelCam = MasterManager.Instance.modelCam;
 
         mesh = Instantiate(model.model, modelPivot).GetComponent<MeshRenderer>();
         if (!mesh) Debug.LogError("Controller found no mesh");
-        mesh.gameObject.transform.position = modelPivot.position - mesh.bounds.center;
+        mesh.gameObject.transform.position += modelPivot.position - mesh.bounds.center;
         mesh.sharedMaterial.SetFloat("_CurrentHint", 0);
+        radius = mesh.sharedMaterial.GetFloat("_radius");
         lowestHeight = mesh.bounds.min.y;
 
         boundsRadius = Mathf.Max(mesh.bounds.size.x, mesh.bounds.size.z) * 0.5f;
@@ -49,6 +51,7 @@ public class ModelController : MonoBehaviour
         targetZoom = maxZoom + (minZoom - minZoom) * 0.1f;
 
         modelIsLoaded = true;
+        modelIsFinished = false;
     }
 
     void Update()
@@ -67,10 +70,15 @@ public class ModelController : MonoBehaviour
         // Gradually decrease the velocity over time if no new velocity is added
         rotationVelocity = Vector2.Lerp(rotationVelocity, Vector2.zero, decayRate * Time.deltaTime);
 
+        transform.position = new Vector3(transform.position.x, transform.position.y, modelCam.transform.position.z + Mathf.Lerp(transform.position.z, targetZoom, zoomSmooth * Time.deltaTime));
 
-        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, Mathf.Lerp(cam.transform.position.z, targetZoom, zoomSmooth * Time.deltaTime));
-     
+        if (modelIsFinished)
+        {
+            radius += 2 * Time.deltaTime;
+            mesh.sharedMaterial.SetFloat("_radius", radius);
+        }
     }
+
 
     public void Zoom(float delta)
     {
@@ -127,5 +135,10 @@ public class ModelController : MonoBehaviour
 
         // Return the required distance
         return distance;
+    }
+
+    public void SetScreenPos(Vector2 screenPos)
+    {
+        MasterManager.Instance.modelCam.transform.position = MasterManager.Instance.mainCam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 0));
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1406548713588233491}
   - component: {fileID: 2815837745608620679}
   - component: {fileID: 1853909705577646241}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: sessel_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

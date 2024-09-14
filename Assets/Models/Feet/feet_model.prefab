@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7030988524006489019}
   - component: {fileID: 8578742793418613929}
   - component: {fileID: 1181416394153902465}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: feet_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
