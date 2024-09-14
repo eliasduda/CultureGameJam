@@ -9,6 +9,10 @@ public class ModelController : MonoBehaviour
     public float decayRate = 5f;
     public float rotationSpeed = 5f;
     public Vector2 tiltLimits = new Vector2(-20, 10);
+
+    private Camera cam;
+    private float targetZoom, minZoom, maxZoom;
+
     public Transform modelPivot;
     [System.NonSerialized]
     public float lowestHeight, boundsRadius;
@@ -17,9 +21,13 @@ public class ModelController : MonoBehaviour
 
     private int currentHint;
     private Vector3[] HintPositions;
+    public float zoomSmooth, zoomSpeed;
 
     private void Start()
     {
+        cam = MasterManager.Instance.mainCam;
+
+
         mesh = GetComponentInChildren<MeshRenderer>();
         if (!mesh) Debug.LogError("Controller found no mesh");
         mesh.gameObject.transform.position = modelPivot.position - mesh.bounds.center;
@@ -33,6 +41,9 @@ public class ModelController : MonoBehaviour
         {
             HintPositions[i] = mesh.sharedMaterial.GetVector("_Hint" + (i + 1));
         }
+
+        SetMinMaxZoomLevel();
+        targetZoom = cam.transform.position.z;
     }
 
     void Update()
@@ -50,6 +61,19 @@ public class ModelController : MonoBehaviour
         // Gradually decrease the velocity over time if no new velocity is added
         rotationVelocity = Vector2.Lerp(rotationVelocity, Vector2.zero, decayRate * Time.deltaTime);
 
+
+        cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, Mathf.Lerp(cam.transform.position.z, targetZoom, zoomSmooth * Time.deltaTime));
+
+    }
+
+    public void SetMinMaxZoomLevel()
+    {
+        minZoom = CalculateDistanceToFitObjectInFrame(cam, mesh.bounds.size);
+        minZoom = CalculateDistanceToFitObjectInFrame(cam, mesh.bounds.size / 2);
+    }
+    public void Zoom(float delta)
+    {
+        targetZoom = Mathf.Clamp(targetZoom + delta * zoomSpeed, minZoom, maxZoom);
     }
 
     internal void SetHint(int hint,Vector3 pos)
@@ -73,5 +97,34 @@ public class ModelController : MonoBehaviour
     public void SetRotationVelocity(Vector2 newVelocity)
     {
         rotationVelocity += newVelocity * rotationSpeed;
+    }
+
+    public float CalculateDistanceToFitObjectInFrame(Camera camera, Vector3 objectBoundsSize)
+    {
+        // Get the size of the object (largest dimension)
+        float objectHeight = objectBoundsSize.y; // height of the object
+        float objectWidth = objectBoundsSize.x;  // width of the object
+        float objectDepth = objectBoundsSize.z;  // depth of the object
+
+        // Choose the largest dimension between width and height to make sure it fits
+        float objectSize = Mathf.Max(objectHeight, objectWidth);
+
+        // Calculate half of the field of view in radians
+        float cameraFOVRadians = camera.fieldOfView * Mathf.Deg2Rad / 2.0f;
+
+        // Get the aspect ratio of the camera (width/height)
+        float aspectRatio = camera.aspect;
+
+        // If the width is larger, adjust for the aspect ratio to avoid clipping on the sides
+        if (objectWidth > objectHeight)
+        {
+            objectSize = objectSize / aspectRatio;
+        }
+
+        // Calculate the distance from the camera to fit the object in the frame
+        float distance = objectSize / Mathf.Tan(cameraFOVRadians);
+
+        // Return the required distance
+        return distance;
     }
 }

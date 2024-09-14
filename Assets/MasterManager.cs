@@ -6,7 +6,7 @@ public class MasterManager : MonoBehaviour
 {
     public static MasterManager Instance;
 
-    public Camera mainCam, uiCam;
+    public Camera mainCam;
     public ModelController modelController;
     // Start is called before the first frame update
     void Awake()

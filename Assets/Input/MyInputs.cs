@@ -38,18 +38,18 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Touch0"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""dba1dd46-fb4f-4b30-96bf-fb4294e1a0fc"",
-                    ""expectedControlType"": ""Touch"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Touch1"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""22d26d88-7279-403e-89a0-07dfdf31908e"",
-                    ""expectedControlType"": ""Touch"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -71,6 +71,24 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Touch0Position"",
+                    ""type"": ""Value"",
+                    ""id"": ""7020a245-2c38-4661-9a0c-61797ce3f2c3"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Touch1Posiiton"",
+                    ""type"": ""Value"",
+                    ""id"": ""38fe4d0d-235c-459b-9700-071744a53f0f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -143,7 +161,7 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2d9fc95d-ee06-4b16-80b5-cb128b7d981a"",
-                    ""path"": ""<Touchscreen>/touch0"",
+                    ""path"": ""<Touchscreen>/touch0/press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -154,7 +172,7 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b9d769c5-b1b9-461e-af1f-3b2840f5ceda"",
-                    ""path"": ""<Touchscreen>/touch1"",
+                    ""path"": ""<Touchscreen>/touch1/press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -183,6 +201,28 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
                     ""action"": ""PrimaryTouchButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b134ffcd-48d0-4ddc-b82c-0ee5caae069c"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch0Position"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f924d88f-0ab5-4d61-8b39-7e8f408bff11"",
+                    ""path"": ""<Touchscreen>/touch1/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch1Posiiton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -196,6 +236,8 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
         m_ModelView_Touch1 = m_ModelView.FindAction("Touch1", throwIfNotFound: true);
         m_ModelView_SwipeAxis = m_ModelView.FindAction("SwipeAxis", throwIfNotFound: true);
         m_ModelView_PrimaryTouchButton = m_ModelView.FindAction("PrimaryTouchButton", throwIfNotFound: true);
+        m_ModelView_Touch0Position = m_ModelView.FindAction("Touch0Position", throwIfNotFound: true);
+        m_ModelView_Touch1Posiiton = m_ModelView.FindAction("Touch1Posiiton", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -262,6 +304,8 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_ModelView_Touch1;
     private readonly InputAction m_ModelView_SwipeAxis;
     private readonly InputAction m_ModelView_PrimaryTouchButton;
+    private readonly InputAction m_ModelView_Touch0Position;
+    private readonly InputAction m_ModelView_Touch1Posiiton;
     public struct ModelViewActions
     {
         private @MyInputs m_Wrapper;
@@ -271,6 +315,8 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
         public InputAction @Touch1 => m_Wrapper.m_ModelView_Touch1;
         public InputAction @SwipeAxis => m_Wrapper.m_ModelView_SwipeAxis;
         public InputAction @PrimaryTouchButton => m_Wrapper.m_ModelView_PrimaryTouchButton;
+        public InputAction @Touch0Position => m_Wrapper.m_ModelView_Touch0Position;
+        public InputAction @Touch1Posiiton => m_Wrapper.m_ModelView_Touch1Posiiton;
         public InputActionMap Get() { return m_Wrapper.m_ModelView; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -295,6 +341,12 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
             @PrimaryTouchButton.started += instance.OnPrimaryTouchButton;
             @PrimaryTouchButton.performed += instance.OnPrimaryTouchButton;
             @PrimaryTouchButton.canceled += instance.OnPrimaryTouchButton;
+            @Touch0Position.started += instance.OnTouch0Position;
+            @Touch0Position.performed += instance.OnTouch0Position;
+            @Touch0Position.canceled += instance.OnTouch0Position;
+            @Touch1Posiiton.started += instance.OnTouch1Posiiton;
+            @Touch1Posiiton.performed += instance.OnTouch1Posiiton;
+            @Touch1Posiiton.canceled += instance.OnTouch1Posiiton;
         }
 
         private void UnregisterCallbacks(IModelViewActions instance)
@@ -314,6 +366,12 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
             @PrimaryTouchButton.started -= instance.OnPrimaryTouchButton;
             @PrimaryTouchButton.performed -= instance.OnPrimaryTouchButton;
             @PrimaryTouchButton.canceled -= instance.OnPrimaryTouchButton;
+            @Touch0Position.started -= instance.OnTouch0Position;
+            @Touch0Position.performed -= instance.OnTouch0Position;
+            @Touch0Position.canceled -= instance.OnTouch0Position;
+            @Touch1Posiiton.started -= instance.OnTouch1Posiiton;
+            @Touch1Posiiton.performed -= instance.OnTouch1Posiiton;
+            @Touch1Posiiton.canceled -= instance.OnTouch1Posiiton;
         }
 
         public void RemoveCallbacks(IModelViewActions instance)
@@ -338,5 +396,7 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
         void OnTouch1(InputAction.CallbackContext context);
         void OnSwipeAxis(InputAction.CallbackContext context);
         void OnPrimaryTouchButton(InputAction.CallbackContext context);
+        void OnTouch0Position(InputAction.CallbackContext context);
+        void OnTouch1Posiiton(InputAction.CallbackContext context);
     }
 }
