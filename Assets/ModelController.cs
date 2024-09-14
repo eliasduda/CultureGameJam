@@ -9,26 +9,30 @@ public class ModelController : MonoBehaviour
     public float decayRate = 5f;
     public float rotationSpeed = 5f;
     public Vector2 tiltLimits = new Vector2(-20, 10);
+    public float zoomSmooth, zoomSpeed;
+    private float minZoom = -30f, maxZoom = -100;
 
     private Camera cam;
-    private float targetZoom, minZoom, maxZoom;
+    private float targetZoom;
 
     public Transform modelPivot;
-    [System.NonSerialized]
-    public float lowestHeight, boundsRadius;
     public DropShaddow shaddow;
-    MeshRenderer mesh;
 
+
+    public ModelSettings currentModel;
+    public MeshRenderer mesh;
     private int currentHint;
     private Vector3[] HintPositions;
-    public float zoomSmooth, zoomSpeed;
+    [System.NonSerialized]
+    public float lowestHeight, boundsRadius;
+    public bool modelIsLoaded = true;
 
-    private void Start()
+    public void LoadModel(ModelSettings model)
     {
+        currentModel = model;
         cam = MasterManager.Instance.mainCam;
 
-
-        mesh = GetComponentInChildren<MeshRenderer>();
+        mesh = Instantiate(model.model, modelPivot).GetComponent<MeshRenderer>();
         if (!mesh) Debug.LogError("Controller found no mesh");
         mesh.gameObject.transform.position = modelPivot.position - mesh.bounds.center;
         lowestHeight = mesh.bounds.min.y;
@@ -41,13 +45,14 @@ public class ModelController : MonoBehaviour
         {
             HintPositions[i] = mesh.sharedMaterial.GetVector("_Hint" + (i + 1));
         }
+        targetZoom = minZoom - (minZoom - minZoom) * 0.5f;
 
-        SetMinMaxZoomLevel();
-        targetZoom = cam.transform.position.z;
+        modelIsLoaded = true;
     }
 
     void Update()
     {
+        if (!modelIsLoaded) return;
         // Apply rotation around the local x-axis
         transform.Rotate(Vector3.right, rotationVelocity.y * Time.deltaTime, Space.World);
         // Apply rotation around the local up-axis (y-axis)
@@ -63,17 +68,12 @@ public class ModelController : MonoBehaviour
 
 
         cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, Mathf.Lerp(cam.transform.position.z, targetZoom, zoomSmooth * Time.deltaTime));
-
+     
     }
 
-    public void SetMinMaxZoomLevel()
-    {
-        minZoom = CalculateDistanceToFitObjectInFrame(cam, mesh.bounds.size);
-        minZoom = CalculateDistanceToFitObjectInFrame(cam, mesh.bounds.size / 2);
-    }
     public void Zoom(float delta)
     {
-        targetZoom = Mathf.Clamp(targetZoom + delta * zoomSpeed, minZoom, maxZoom);
+        targetZoom = Mathf.Clamp(targetZoom + delta * zoomSpeed, maxZoom, minZoom);
     }
 
     internal void SetHint(int hint,Vector3 pos)

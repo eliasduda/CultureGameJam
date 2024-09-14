@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
     bool clickedOnModel = false;
     public int currentHintSetter = 0;
 
-    private float pinchStartDistance;
+    private float pinchDistance;
 
     // Start is called before the first frame update
     void Start()
@@ -41,12 +41,15 @@ public class InputManager : MonoBehaviour
         if(inputs.ModelView.Touch1.WasPerformedThisFrame())
         {
             Debug.Log("Multitouch");
-            pinchStartDistance = Vector3.Distance(inputs.ModelView.Touch0Position.ReadValue<Vector2>(), inputs.ModelView.Touch1Posiiton.ReadValue<Vector2>());
+            pinchDistance = Vector3.Distance(inputs.ModelView.Touch0Position.ReadValue<Vector2>(), inputs.ModelView.Touch1Posiiton.ReadValue<Vector2>());
         }
         else if (inputs.ModelView.Touch1.IsPressed() && inputs.ModelView.Touch0.IsPressed())
         {
-            float zoomdelta = pinchStartDistance = Vector3.Distance(inputs.ModelView.Touch0Position.ReadValue<Vector2>(), inputs.ModelView.Touch1Posiiton.ReadValue<Vector2>()) - pinchStartDistance;
-            Debug.Log("Pinching "+zoomdelta);
+            float currentDist = Vector3.Distance(inputs.ModelView.Touch0Position.ReadValue<Vector2>(), inputs.ModelView.Touch1Posiiton.ReadValue<Vector2>());
+            float zoomdelta = pinchDistance = currentDist - pinchDistance;
+            pinchDistance = currentDist;
+
+            if(zoomdelta != 0)Debug.Log("Pinching "+zoomdelta);
             MasterManager.Instance.modelController.Zoom(zoomdelta);
         }
         else if (clickedOnModel && inputs.ModelView.PrimaryTouchButton.IsInProgress())
@@ -59,9 +62,8 @@ public class InputManager : MonoBehaviour
         if (inputs.ModelView.PrimaryTouchButton.WasReleasedThisFrame()) clickedOnModel = false;
         else if (currentPos != Vector2.zero && inputs.ModelView.PrimaryTouchButton.WasPressedThisFrame())
         {
-            Ray r = cam.ScreenPointToRay(currentPos);
-            if(Physics.Raycast(r, out RaycastHit hit, 100f))
-            {
+            if(Vector3.Distance(currentPos, cam.WorldToScreenPoint(MasterManager.Instance.modelController.transform.position)) < Screen.width) 
+            { 
                 clickedOnModel = true;
                 Debug.Log("Clicked On Model");
                 //if (Input.GetKey(KeyCode.H))

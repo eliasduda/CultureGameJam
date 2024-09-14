@@ -11,8 +11,9 @@ public class PhoneCamera : MonoBehaviour
     int currentCam;
     WebCamTexture tex;
     Texture2D squareTexture;
-    public RawImage display;
+    public RawImage display,finishedPicture;
 
+    private int picture_count;
 
 
     // Start is called before the first frame update
@@ -127,10 +128,10 @@ public class PhoneCamera : MonoBehaviour
 
     void SavePictureCallback(string callbackText = "")
     {
-        SavePicture("Test");
+        SavePicture();
     }
 
-    public void SavePicture(string name)
+    public void SavePicture()
     {
         if (!camAvailiable)
         {
@@ -139,15 +140,40 @@ public class PhoneCamera : MonoBehaviour
         }
         if (HasPermission(Permission.ExternalStorageWrite))
         {
-            string path = Path.Combine(Application.persistentDataPath, name + ".jpg");
+            string path = GetCurrentModelPicturePath(picture_count);
             Texture2D texture = display.texture as Texture2D;
             byte[] bytes = texture.EncodeToJPG();
             System.IO.File.WriteAllBytes(path, bytes);
+            picture_count++;
             Debug.Log("Image captures and saved at " + path + name + ".jpg");
+            DisplayPicture();
         }
         else
         {
             AskPermissionToStorage();
+        }
+    }
+
+    string GetCurrentModelPicturePath(int number)
+    {
+        return Path.Combine(Application.persistentDataPath, MasterManager.Instance.modelController.currentModel.modelName + "_" + number + ".jpg");
+    }
+
+    public void DisplayPicture()
+    {
+        string path = GetCurrentModelPicturePath(0);
+        if (File.Exists(path))
+        {
+            byte[] fileData = File.ReadAllBytes(path);
+
+            Texture2D texture = new Texture2D(2, 2); 
+            texture.LoadImage(fileData); 
+
+            finishedPicture.texture = texture;
+        }
+        else
+        {
+            Debug.LogError("Image file not found at: " + path);
         }
     }
 }

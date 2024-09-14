@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d1e1ea74a204e4ab5313a3b5be886e, type: 3}
+  m_Name: "L\xF6we"
+  m_EditorClassIdentifier: 
+  model: {fileID: 3510812191192062234, guid: 903fd05e9ba9e3f468df89df004794f9, type: 3}
+  meshName: "L\xF6we"
