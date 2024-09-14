@@ -35,6 +35,7 @@ public class ModelController : MonoBehaviour
         mesh = Instantiate(model.model, modelPivot).GetComponent<MeshRenderer>();
         if (!mesh) Debug.LogError("Controller found no mesh");
         mesh.gameObject.transform.position = modelPivot.position - mesh.bounds.center;
+        mesh.sharedMaterial.SetFloat("_CurrentHint", 0);
         lowestHeight = mesh.bounds.min.y;
 
         boundsRadius = Mathf.Max(mesh.bounds.size.x, mesh.bounds.size.z) * 0.5f;
@@ -45,7 +46,7 @@ public class ModelController : MonoBehaviour
         {
             HintPositions[i] = mesh.sharedMaterial.GetVector("_Hint" + (i + 1));
         }
-        targetZoom = minZoom - (minZoom - minZoom) * 0.5f;
+        targetZoom = maxZoom + (minZoom - minZoom) * 0.1f;
 
         modelIsLoaded = true;
     }

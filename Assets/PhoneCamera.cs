@@ -16,6 +16,7 @@ public class PhoneCamera : MonoBehaviour
     private int picture_count;
 
 
+    public Dictionary<ModelSettings, Texture2D> photos = new Dictionary<ModelSettings, Texture2D>();
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +42,7 @@ public class PhoneCamera : MonoBehaviour
             display.texture = squareTexture;
 
             int scaleY = tex.videoVerticallyMirrored ? -1 :  1;
-            display.rectTransform.localScale = new Vector3(isFrontCam? -1 : 1, scaleY, 1);
+            display.rectTransform.localScale = new Vector3(isFrontCam? 1 : 1, scaleY, 1);
 
             int orient = -tex.videoRotationAngle;
             display.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
@@ -92,13 +93,13 @@ public class PhoneCamera : MonoBehaviour
 
     bool HasPermission(string permission)
     {
-        if (Application.isEditor) return true;
 #if UNITY_IOS
         return (Permission.HasUserAuthorizedPermission(permission));
 #endif
 #if UNITY_ANDROID
         return Permission.HasUserAuthorizedPermission(permission);
 #endif
+        return true;
     }
 
     void AskPermissionToCamera()
@@ -121,8 +122,8 @@ public class PhoneCamera : MonoBehaviour
 #endif
 #if UNITY_ANDROID
         var callbacks = new PermissionCallbacks();
-        callbacks.PermissionGranted += SavePictureCallback;
-        Permission.RequestUserPermission(Permission.ExternalStorageWrite, callbacks);
+        //callbacks.PermissionGranted += SavePictureCallback;
+        Permission.RequestUserPermission(Permission.ExternalStorageRead, callbacks);
 #endif
     }
 
@@ -138,19 +139,15 @@ public class PhoneCamera : MonoBehaviour
             Debug.LogError("Cant capture no camera availiable");
             return;
         }
-        if (HasPermission(Permission.ExternalStorageWrite))
+        else 
         {
-            string path = GetCurrentModelPicturePath(picture_count);
-            Texture2D texture = display.texture as Texture2D;
-            byte[] bytes = texture.EncodeToJPG();
-            System.IO.File.WriteAllBytes(path, bytes);
-            picture_count++;
-            Debug.Log("Image captures and saved at " + path + name + ".jpg");
+            Texture2D displayTexture = display.texture as Texture2D;
+            Texture2D texture = new Texture2D(displayTexture.width, displayTexture.height);
+            texture.SetPixels(displayTexture.GetPixels());
+            texture.Apply();
+            if (photos.ContainsKey(MasterManager.Instance.modelController.currentModel)) photos.Remove(MasterManager.Instance.modelController.currentModel);
+            photos.Add(MasterManager.Instance.modelController.currentModel, texture);
             DisplayPicture();
-        }
-        else
-        {
-            AskPermissionToStorage();
         }
     }
 
@@ -161,19 +158,10 @@ public class PhoneCamera : MonoBehaviour
 
     public void DisplayPicture()
     {
-        string path = GetCurrentModelPicturePath(0);
-        if (File.Exists(path))
+        if (photos.TryGetValue(MasterManager.Instance.modelController.currentModel, out Texture2D tex))
         {
-            byte[] fileData = File.ReadAllBytes(path);
-
-            Texture2D texture = new Texture2D(2, 2); 
-            texture.LoadImage(fileData); 
-
-            finishedPicture.texture = texture;
-        }
-        else
-        {
-            Debug.LogError("Image file not found at: " + path);
+            finishedPicture.texture = tex;
         }
     }
+
 }

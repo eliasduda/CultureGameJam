@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
 
 public class MasterManager : MonoBehaviour
 {
@@ -15,11 +16,11 @@ public class MasterManager : MonoBehaviour
     {
         Instance = this;
         modelController.LoadModel(startModel);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 }

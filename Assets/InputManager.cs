@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
     Vector2 currentPos, currentDelta;
     bool clickedOnModel = false;
     public int currentHintSetter = 0;
+    public bool setHintOnClick;
 
     private float pinchDistance;
 
@@ -18,6 +19,7 @@ public class InputManager : MonoBehaviour
         inputs = new MyInputs();
         cam = MasterManager.Instance.mainCam;
         inputs.Enable();
+        setHintOnClick = false;
     }
     void OnDestroy()
     {
@@ -66,12 +68,15 @@ public class InputManager : MonoBehaviour
             { 
                 clickedOnModel = true;
                 Debug.Log("Clicked On Model");
-                //if (Input.GetKey(KeyCode.H))
-                //{
-                //    Debug.Log("Set Hint");
-                //    MasterManager.Instance.modelController.SetHint(currentHintSetter, hit.point);
-                //    currentHintSetter++;
-                //}
+                if (Physics.Raycast(cam.ScreenPointToRay(currentPos), out RaycastHit hit, 1000))
+                {
+                    if (setHintOnClick)
+                    {
+                        Debug.Log("Set Hint");
+                        MasterManager.Instance.modelController.SetHint(currentHintSetter, hit.point);
+                        currentHintSetter++;
+                    }
+                }
             }
         }
 

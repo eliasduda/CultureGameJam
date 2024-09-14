@@ -2097,6 +2097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHintSetter: 0
+  setHintOnClick: 0
 --- !u!114 &2142475403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2111,7 +2112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCam: {fileID: 929854660}
   modelController: {fileID: 1686697825}
-  startModel: {fileID: 11400000, guid: 6d0fbce17dbfbcf4394350b0a399052b, type: 2}
+  startModel: {fileID: 11400000, guid: 4d65e2dea8608fe4d9022d39902b81d2, type: 2}
 --- !u!4 &2142475404
 Transform:
   m_ObjectHideFlags: 0
@@ -2238,8 +2239,8 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 929854661}
   - {fileID: 2142475404}
+  - {fileID: 929854661}
   - {fileID: 1689865794}
   - {fileID: 1686697826}
   - {fileID: 271033994}
