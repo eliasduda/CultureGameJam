@@ -56,6 +56,7 @@ public class MainMenu : MonoBehaviour
         else phoneCam.StopCamera();
 
         if (currentMenu == memoryMenu) modelView.Reveal();
+        if (currentMenu == collectionMenu) collectionMenu.GetComponent<CollectionMenu>().GoToOverview();
 
         CameraButton.SetActive(currentMenu == modelMenu);
         modelButton.SetActive(currentMenu != modelMenu);
