@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7da0a70afefc6418ff17997af3af61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 11400000, guid: afb7fc412acf8cc428ba7a6767351133, type: 2}
+  model: {fileID: 11400000, guid: 4d65e2dea8608fe4d9022d39902b81d2, type: 2}
 --- !u!114 &3442506777711377226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,7 +963,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

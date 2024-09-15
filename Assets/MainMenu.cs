@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,8 @@ public class MainMenu : MonoBehaviour
     public Slider hintSlider;
     public PhoneCamera phoneCam;
     public GameObject modelButton, CameraButton;
+    public TextMeshProUGUI description;
+    public TextMeshProUGUI[] hints;
     private GameObject currentMenu;
 
 
@@ -68,4 +71,17 @@ public class MainMenu : MonoBehaviour
     public void GoToModel() { SwitchMenu(modelMenu); }
     public void GoToCamera() { SwitchMenu(cameraMenu); }
     public void GoToMemory() { SwitchMenu(memoryMenu); }
+
+    public void SetModelHints(ModelSettings model)
+    {
+        hintSlider.value = 0;
+        int hintIndex = 0;
+        foreach(string hint in model.hints)
+        {
+            if (hintIndex >= hints.Length) break;
+            hints[hintIndex].text = hint;
+            if(hints[hintIndex].transform.GetChild(0)) hints[hintIndex].transform.GetChild(0).gameObject.SetActive(false);
+        }
+        description.text = model.Description;
+    }
 }
