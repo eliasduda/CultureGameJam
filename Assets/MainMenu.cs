@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
     public GameObject cameraMenu;
     public Map map;
     public ModelController modelView;
+    public Slider hintSlider;
     public PhoneCamera phoneCam;
     public GameObject modelButton, CameraButton;
     private GameObject currentMenu;

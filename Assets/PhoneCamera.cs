@@ -147,6 +147,7 @@ public class PhoneCamera : MonoBehaviour
             texture.Apply();
             if (photos.ContainsKey(MasterManager.Instance.modelController.currentModel)) photos.Remove(MasterManager.Instance.modelController.currentModel);
             photos.Add(MasterManager.Instance.modelController.currentModel, texture);
+            DisplayPicture();
         }
     }
 
