@@ -30,6 +30,7 @@ public class ModelController : MonoBehaviour
 
     public void LoadModel(ModelSettings model)
     {
+        transform.rotation = Quaternion.identity;
         currentModel = model;
         modelCam = MasterManager.Instance.modelCam;
 

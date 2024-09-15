@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: "L\xF6we"
   m_EditorClassIdentifier: 
   model: {fileID: 3510812191192062234, guid: 903fd05e9ba9e3f468df89df004794f9, type: 3}
-  meshName: "L\xF6we"
+  modelName: 
+  wasFinished: 0
+  Description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+    voluptua.
+  hints:
+  - The sight is a statue
+  - The sight is made of stone
+  - The sight depicts an animal

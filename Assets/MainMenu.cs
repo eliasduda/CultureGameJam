@@ -80,7 +80,8 @@ public class MainMenu : MonoBehaviour
         {
             if (hintIndex >= hints.Length) break;
             hints[hintIndex].text = hint;
-            if(hints[hintIndex].transform.GetChild(0)) hints[hintIndex].transform.GetChild(0).gameObject.SetActive(false);
+            if(hints[hintIndex].transform.GetChild(0)) hints[hintIndex].transform.GetChild(0).gameObject.SetActive(true);
+            hintIndex++;
         }
         description.text = model.Description;
     }
