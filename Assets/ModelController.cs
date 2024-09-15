@@ -41,6 +41,8 @@ public class ModelController : MonoBehaviour
         radius = mesh.sharedMaterial.GetFloat("_radius");
         halfHeight = mesh.bounds.center.y - mesh.bounds.min.y;
 
+        MainMenu.Instance.hintSlider.value = 0;
+
         boundsRadius = Mathf.Max(mesh.bounds.size.x, mesh.bounds.size.z) * 0.5f;
 
         HintPositions = new Vector3[5];
@@ -153,5 +155,6 @@ public class ModelController : MonoBehaviour
     public void Reveal()
     {
         modelIsFinished = true;
+        if(currentHint == 0)mesh.sharedMaterial.SetFloat("_CurrentHint", 1);
     }
 }
