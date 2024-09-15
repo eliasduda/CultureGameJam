@@ -9,7 +9,7 @@ public class MasterManager : MonoBehaviour
 
     public Camera modelCam, mainCam;
     public ModelController modelController;
-    public MainMenu menu;
+    public MainMenuToolkit menu;
     public PhoneCamera phoneCam;
 
     public ModelSettings startModel;

@@ -89,6 +89,15 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""9470001e-3fc5-4a19-98bb-465e91917f56"",
+                    ""expectedControlType"": ""Delta"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -223,6 +232,17 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Touch1Posiiton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dac719c9-18e7-4126-b211-bdde6b276fd7"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -238,6 +258,7 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
         m_ModelView_PrimaryTouchButton = m_ModelView.FindAction("PrimaryTouchButton", throwIfNotFound: true);
         m_ModelView_Touch0Position = m_ModelView.FindAction("Touch0Position", throwIfNotFound: true);
         m_ModelView_Touch1Posiiton = m_ModelView.FindAction("Touch1Posiiton", throwIfNotFound: true);
+        m_ModelView_Zoom = m_ModelView.FindAction("Zoom", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -306,6 +327,7 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_ModelView_PrimaryTouchButton;
     private readonly InputAction m_ModelView_Touch0Position;
     private readonly InputAction m_ModelView_Touch1Posiiton;
+    private readonly InputAction m_ModelView_Zoom;
     public struct ModelViewActions
     {
         private @MyInputs m_Wrapper;
@@ -317,6 +339,7 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
         public InputAction @PrimaryTouchButton => m_Wrapper.m_ModelView_PrimaryTouchButton;
         public InputAction @Touch0Position => m_Wrapper.m_ModelView_Touch0Position;
         public InputAction @Touch1Posiiton => m_Wrapper.m_ModelView_Touch1Posiiton;
+        public InputAction @Zoom => m_Wrapper.m_ModelView_Zoom;
         public InputActionMap Get() { return m_Wrapper.m_ModelView; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -347,6 +370,9 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
             @Touch1Posiiton.started += instance.OnTouch1Posiiton;
             @Touch1Posiiton.performed += instance.OnTouch1Posiiton;
             @Touch1Posiiton.canceled += instance.OnTouch1Posiiton;
+            @Zoom.started += instance.OnZoom;
+            @Zoom.performed += instance.OnZoom;
+            @Zoom.canceled += instance.OnZoom;
         }
 
         private void UnregisterCallbacks(IModelViewActions instance)
@@ -372,6 +398,9 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
             @Touch1Posiiton.started -= instance.OnTouch1Posiiton;
             @Touch1Posiiton.performed -= instance.OnTouch1Posiiton;
             @Touch1Posiiton.canceled -= instance.OnTouch1Posiiton;
+            @Zoom.started -= instance.OnZoom;
+            @Zoom.performed -= instance.OnZoom;
+            @Zoom.canceled -= instance.OnZoom;
         }
 
         public void RemoveCallbacks(IModelViewActions instance)
@@ -398,5 +427,6 @@ public partial class @MyInputs: IInputActionCollection2, IDisposable
         void OnPrimaryTouchButton(InputAction.CallbackContext context);
         void OnTouch0Position(InputAction.CallbackContext context);
         void OnTouch1Posiiton(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
     }
 }

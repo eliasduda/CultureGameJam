@@ -25,7 +25,7 @@ public class ModelController : MonoBehaviour
     private int currentHint;
     private Vector3[] HintPositions;
     [System.NonSerialized]
-    public float lowestHeight, boundsRadius;
+    public float halfHeight, boundsRadius;
     public bool modelIsLoaded = true, modelIsFinished;
 
     public void LoadModel(ModelSettings model)
@@ -33,15 +33,15 @@ public class ModelController : MonoBehaviour
         currentModel = model;
         modelCam = MasterManager.Instance.modelCam;
 
+        if (mesh) Destroy(mesh.gameObject);
         mesh = Instantiate(model.model, modelPivot).GetComponent<MeshRenderer>();
         if (!mesh) Debug.LogError("Controller found no mesh");
         mesh.gameObject.transform.position += modelPivot.position - mesh.bounds.center;
         mesh.sharedMaterial.SetFloat("_CurrentHint", 0);
         radius = mesh.sharedMaterial.GetFloat("_radius");
-        lowestHeight = mesh.bounds.min.y;
+        halfHeight = mesh.bounds.center.y - mesh.bounds.min.y;
 
         boundsRadius = Mathf.Max(mesh.bounds.size.x, mesh.bounds.size.z) * 0.5f;
-        shaddow.SetTo(this);
 
         HintPositions = new Vector3[5];
         for(int i = 0; i < HintPositions.Length; i++)
@@ -49,6 +49,8 @@ public class ModelController : MonoBehaviour
             HintPositions[i] = mesh.sharedMaterial.GetVector("_Hint" + (i + 1));
         }
         targetZoom = maxZoom + (minZoom - minZoom) * 0.1f;
+
+        shaddow.SetTo(this);
 
         modelIsLoaded = true;
         modelIsFinished = false;
@@ -146,5 +148,10 @@ public class ModelController : MonoBehaviour
     public void SetScreenPos(Vector2 screenPos)
     {
         MasterManager.Instance.modelCam.transform.position = MasterManager.Instance.mainCam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 0));
+    }
+
+    public void Reveal()
+    {
+        modelIsFinished = true;
     }
 }

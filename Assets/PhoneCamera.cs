@@ -41,7 +41,6 @@ public class PhoneCamera : MonoBehaviour
             squareTexture.SetPixels(pixels);
             squareTexture.Apply();
             display.texture = squareTexture;
-            MasterManager.Instance.menu.RenderInCameraFrame(squareTexture);
 
             int scaleY = tex.videoVerticallyMirrored ? -1 :  1;
             display.rectTransform.localScale = new Vector3(isFrontCam? 1 : 1, scaleY, 1);
@@ -148,7 +147,6 @@ public class PhoneCamera : MonoBehaviour
             texture.Apply();
             if (photos.ContainsKey(MasterManager.Instance.modelController.currentModel)) photos.Remove(MasterManager.Instance.modelController.currentModel);
             photos.Add(MasterManager.Instance.modelController.currentModel, texture);
-            MasterManager.Instance.modelController.modelIsFinished = true;
         }
     }
 
