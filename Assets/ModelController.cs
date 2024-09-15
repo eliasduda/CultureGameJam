@@ -38,6 +38,7 @@ public class ModelController : MonoBehaviour
         if (!mesh) Debug.LogError("Controller found no mesh");
         mesh.gameObject.transform.position += modelPivot.position - mesh.bounds.center;
         mesh.sharedMaterial.SetFloat("_CurrentHint", 0);
+        mesh.sharedMaterial.SetFloat("_radius", 8);
         radius = mesh.sharedMaterial.GetFloat("_radius");
         halfHeight = mesh.bounds.center.y - mesh.bounds.min.y;
 
